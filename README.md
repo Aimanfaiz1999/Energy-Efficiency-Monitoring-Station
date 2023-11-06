@@ -59,10 +59,10 @@ To get started with the Energy Efficiency Monitoring Station, follow these steps
 
 3. **AWS Policies and roles**:
    - Create a new policy for reading into queues
-   - Assign that policy to Lambda function-Energy consumption role
-   - Assign full access to dynmodb policy and full access to SQS policy to AWS Lamda function-Energy consumption role
-   - Assign full access to dynmodb policy and full access to SNS policy to AWS Lamda function-Alert_gas role
-   - Assign full access to dynmodb policy and full access to SNS policy to AWS Lamda function-Alert_electricity role
+   - Assign that policy to AWS Lambda-Energy consumption role
+   - Assign full access to dynmodb policy and full access to SQS policy to AWS Lamda-Energy consumption role
+   - Assign full access to dynmodb policy and full access to SNS policy to AWS Lamda-Alert_gas role
+   - Assign full access to dynmodb policy and full access to SNS policy to AWS Lamda-Alert_electricity role
 
 5. **Data Generation**:
    - Simulate data for gas and electricity usage. This can be achieved using Python scripts or any other preferred method.
@@ -74,10 +74,11 @@ To get started with the Energy Efficiency Monitoring Station, follow these steps
    - Configure and deploy AWS Lambda functions to process incoming data from the queues.
    - The Lambda functions should perform average calculations for gas and electricity consumption.
    - Ensure that the results are saved to AWS DynamoDB for easy access and analysis.
+   - From AWS Dynamodb, AWS Lamda-Alert_gas role and AWS Lamda-Alert_Electricity triggers if the values are above the thresholds 
 
 6. **Threshold Configuration**:
-   - Set the threshold values for gas and electricity consumption in the Lambda functions.
-   - When the average values exceed these thresholds, the system will trigger an alert.
+   - Set the threshold values for gas and electricity consumption in the Lambda functions-Alert_gas and Alert_electricity respectively.
+   - When the average values exceed these thresholds, the system will trigger an alert. This will send email to recipient.
 
 ## Usage
 
@@ -93,7 +94,7 @@ The Energy Efficiency Monitoring Station is a powerful tool for monitoring and i
 
 ## Alerting
 
-The project includes email notifications for alerting when the average values of gas and electricity usage exceed specified thresholds. Configure the email notifications in the AWS SNS topic and provide the appropriate email addresses for the recipients.
+The project includes email notifications for alerting when the average values of gas and electricity usage exceed specified thresholds. Configure the email notifications in the AWS SNS topic and provide the appropriate email addresses for the recipients. It shows real time data to user. 
 
 ## Contributing
 
