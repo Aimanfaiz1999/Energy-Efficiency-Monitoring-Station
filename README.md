@@ -27,12 +27,21 @@ In this project:
 - AWS Lambda functions are set up to trigger when data arrives in these queues. These functions calculate average values for gas and electricity consumption.
 - The processed data is saved in AWS DynamoDB for easy access and analysis.
 - Thresholds are defined, and email notifications are sent via AWS Simple Notification Service (SNS) when the average values exceed these thresholds.
+- Example of email when the Electricity usage threshold has been crossed:
+- 
+![EmailElectricity](https://github.com/Aimanfaiz1999/Energy-Consumption/assets/127203314/fea5fe6a-46a8-409d-a4c9-fef96bf5e720)
+
+- Example of email when the gas usage threshold has been crossed:
+
+    
+![EmailGas](https://github.com/Aimanfaiz1999/Energy-Consumption/assets/127203314/5b7136a5-36b7-48e6-80ce-448c3de19216)
+
 - Additionally, code is provided in PyCharm that allows you to extract the entire DynamoDB table and display it on your console.
 
   
 ![Userdatatable](https://github.com/Aimanfaiz1999/Energy-Consumption/assets/127203314/ccca95a3-cb56-4487-ae67-e505df11c51a)
 
-## Prerequists
+## Prerequisite
 
 AWS Account 
 
