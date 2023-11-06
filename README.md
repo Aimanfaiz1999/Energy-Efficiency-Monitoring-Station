@@ -16,6 +16,9 @@ The project incorporates a simulated sensor system that generates data, sending 
 
 **Threshold Alerts**: Email notifications are sent via AWS SNS when the average values exceed defined thresholds.
 
+# Architecture
+![Aricheture](https://github.com/Aimanfaiz1999/Energy-Consumption/assets/127203314/d3772503-b132-4caa-af3f-70f6432e22aa)
+
 In this project:
 
 - Mock sensor data for gas and electricity is generated using Python scripts in PyCharm.
@@ -25,7 +28,22 @@ In this project:
 - Thresholds are defined, and email notifications are sent via AWS Simple Notification Service (SNS) when the average values exceed these thresholds.
 - Additionally, code is provided in PyCharm that allows you to extract the entire DynamoDB table and display it on your console.
 
+  
+![Userdatatable](https://github.com/Aimanfaiz1999/Energy-Consumption/assets/127203314/ccca95a3-cb56-4487-ae67-e505df11c51a)
+
+## Prerequists
+
+AWS Account 
+
+PyCharm
+
+Boto3
+
+AWS CLI
+
 ## Setup
+
+### Setup enviroment
 
 To get started with the Energy Efficiency Monitoring Station, follow these steps:
 
@@ -34,18 +52,25 @@ To get started with the Energy Efficiency Monitoring Station, follow these steps
 2. **AWS Setup**:
    - Set up your AWS account if you haven't already.
    - Create two AWS SQS queues, one for gas and one for electricity.
-   - Configure AWS Lambda functions to trigger when data arrives in these queues.
+   - Configure AWS Lambda function-Energy consumption to trigger when data arrives in these queues.
    - Set up AWS DynamoDB to store the processed data.
-   - Configure AWS Lambda functions to trigger when data arrives in dynamodb.
+   - Configure AWS Lambda function to trigger when data arrives in dynamodb.
    - Create an AWS SNS topic for email notifications.
 
-3. **Data Generation**:
+3. **AWS Policies and roles**:
+   - Create a new policy for reading into queues
+   - Assign that policy to Lambda function-Energy consumption role
+   - Assign full access to dynmodb policy and full access to SQS policy to AWS Lamda function-Energy consumption role
+   - Assign full access to dynmodb policy and full access to SNS policy to AWS Lamda function-Alert_gas role
+   - Assign full access to dynmodb policy and full access to SNS policy to AWS Lamda function-Alert_electricity role
+
+5. **Data Generation**:
    - Simulate data for gas and electricity usage. This can be achieved using Python scripts or any other preferred method.
 
-4. **Data Ingestion**:
+6. **Data Ingestion**:
    - Send the simulated data to the respective SQS queues created in the previous step.
 
-5. **Lambda Functions**:
+7. **Lambda Functions**:
    - Configure and deploy AWS Lambda functions to process incoming data from the queues.
    - The Lambda functions should perform average calculations for gas and electricity consumption.
    - Ensure that the results are saved to AWS DynamoDB for easy access and analysis.
