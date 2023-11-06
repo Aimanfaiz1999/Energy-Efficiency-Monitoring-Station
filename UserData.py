@@ -31,6 +31,7 @@ try:
 
     # Print the attributes in a tabular format
     if items_list:
+        print("Please see your latest requested data below")
         print(tabulate(items_list, headers="keys", tablefmt="fancy_grid"))
     else:
         print("No items found in the DynamoDB table.")
