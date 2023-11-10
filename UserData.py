@@ -6,7 +6,7 @@ from tabulate import tabulate
 dynamodb = boto3.client('dynamodb', region_name='eu-north-1')
 
 # Specify the DynamoDB table name
-table_name = 'House'  # Replace with your table name
+table_name = 'House'
 
 try:
     # Query the DynamoDB table
@@ -26,7 +26,7 @@ try:
                 item_dict[attribute_name] = attribute_value['S']
             elif 'N' in attribute_value:
                 item_dict[attribute_name] = attribute_value['N']
-            # You can add more handling for other types as needed
+
         items_list.append(item_dict)
 
     # Print the attributes in a tabular format

@@ -25,7 +25,7 @@ def lambda_handler(event, context):
     threshold = 0.5  # Set your desired threshold value
 
     if avg_gas_reading > threshold:
-        message = "The usage of gas is above the threshold! Current value: " + str(avg_gas_reading)
+        message = "The usage of gas is above the threshold of 0.5! Current value: " + str(avg_gas_reading)
         sns.publish(
             TopicArn='arn:aws:sns:eu-north-1:127865895568:Gas_Notification_SNS',
             Message=message

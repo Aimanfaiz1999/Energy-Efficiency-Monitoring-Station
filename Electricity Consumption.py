@@ -32,4 +32,4 @@ while True:
 
     print(f"Sent electricity reading: {electricity_reading} at {electricity_timestamp}")
 
-    time.sleep(30)  # Send data every hour
+    time.sleep(15)  # Send data every hour

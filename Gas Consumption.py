@@ -33,4 +33,4 @@ while True:
 
     print(f"Sent gas reading: {gas_reading} at {gas_timestamp}")
 
-    time.sleep(30)  # Send data every hour
+    time.sleep(15)  # Send data every hour
