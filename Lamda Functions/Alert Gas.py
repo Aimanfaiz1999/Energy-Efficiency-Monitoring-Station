@@ -12,22 +12,21 @@ def lambda_handler(event, context):
     response = dynamodb.get_item(
         TableName=table_name,
         Key={
-            'sensor_id': {'S': 'gas_sensor'},  # Replace with the appropriate sensor ID
+            'sensor_id': {'S': 'gas-sensor'},  # Replace with the appropriate sensor ID
         }
     )
 
     if 'Item' in response:
-        avg_gas_reading = float(response['Item']['avg_gas_reading']['N'])
+        avg = float(response['Item']['avg']['N'])
     else:
         # Handle the case where the item is not found in DynamoDB
-        avg_gas_reading = 0  # Provide a default value or handle it as needed
+        avg = 0  # Provide a default value or handle it as needed
 
-    threshold = 0.5  # Set your desired threshold value
+    threshold = 500  # Set your desired threshold value
 
-    if avg_gas_reading > threshold:
-        message = "The usage of gas is above the threshold of 0.5! Current value: " + str(avg_gas_reading)
+    if avg > threshold:
+        message = "The usage of gas is above the threshold of 0.5! Current value: " + str(avg)
         sns.publish(
             TopicArn='arn:aws:sns:eu-north-1:127865895568:Gas_Notification_SNS',
             Message=message
         )
-

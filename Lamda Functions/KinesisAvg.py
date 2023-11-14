@@ -23,9 +23,14 @@ def lambda_handler(event, context):
             print(f"Problematic payload: {record['kinesis']['data']}")
             continue
 
-        sensor_id = payload['sensor_id']
-        timestamp = payload['timestamp']
-        data_value = payload['data']['value']
+        sensor_id = payload.get('sensor_id')
+        timestamp = payload.get('timestamp')
+        data_value = extract_data_value(payload)
+
+        if data_value is None:
+            print(f"Invalid payload format: 'data' key is missing or not a valid format. Payload: {payload}")
+            continue
+
         partition_key = record['kinesis']['partitionKey']
 
         # Determine the item type (electricity or gas) based on the partition key
@@ -48,6 +53,18 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps('Records processed successfully')
     }
+
+def extract_data_value(payload):
+    # Check if 'data' key is present
+    if 'data' in payload:
+        # If 'data' is a dictionary, extract 'value' key
+        if isinstance(payload['data'], dict):
+            return payload['data'].get('value')
+        # If 'data' is a direct numeric value, return it
+        elif isinstance(payload['data'], (int, float)):
+            return payload['data']
+
+    return None
 
 def save_to_dynamodb(timestamp, sensor_id, item_type, avg_value):
     # Convert avg_value to Decimal
