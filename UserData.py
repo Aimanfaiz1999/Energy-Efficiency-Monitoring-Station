@@ -6,7 +6,7 @@ from tabulate import tabulate
 dynamodb = boto3.client('dynamodb', region_name='eu-north-1')
 
 # Specify the DynamoDB table name
-table_name = 'House'
+table_name = 'Records'
 
 try:
     # Query the DynamoDB table

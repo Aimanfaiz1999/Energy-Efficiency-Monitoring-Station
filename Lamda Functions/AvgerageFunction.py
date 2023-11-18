@@ -5,7 +5,7 @@ from decimal import Decimal
 
 # Set up the DynamoDB client
 dynamodb = boto3.resource('dynamodb', region_name='eu-north-1')
-table_name = 'House'  # Replace with your DynamoDB table name
+table_name = 'Records'  # Replace with your DynamoDB table name
 table = dynamodb.Table(table_name)
 
 # Dictionary to store running sums and counts for gas and electricity

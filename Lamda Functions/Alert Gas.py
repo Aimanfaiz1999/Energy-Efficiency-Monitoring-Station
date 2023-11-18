@@ -22,7 +22,7 @@ def lambda_handler(event, context):
         # Handle the case where the item is not found in DynamoDB
         avg = 0  # Provide a default value or handle it as needed
 
-    threshold = 500  # Set your desired threshold value
+    threshold = 5  # Set your desired threshold value
 
     if avg > threshold:
         message = "The usage of gas is above the threshold of 0.5! Current value: " + str(avg)

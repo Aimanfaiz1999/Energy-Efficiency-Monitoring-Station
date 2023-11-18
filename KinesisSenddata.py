@@ -8,8 +8,8 @@ from datetime import datetime
 kinesis = boto3.client('kinesis', region_name='eu-north-1')
 
 # Define the Kinesis stream names
-delivery_stream_name = 'DeliveryStream'
-gas_stream_name = 'Gas'
+delivery_stream_name = 'StorageStream'
+gas_stream_name = 'GasElectricity'
 
 def send_continuous_data():
     while True:
