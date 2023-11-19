@@ -17,7 +17,7 @@ The project incorporates a simulated sensor system that generates data, sending 
 **Threshold Alerts**: Email notifications are sent via AWS SNS when the average values exceed defined thresholds.
 
 # Architecture
-Images/Architecture.png
+![Alt text](Images/Architecture.png)
 
 
 In this project:
