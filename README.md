@@ -4,17 +4,52 @@
 
 The Energy Efficiency Monitoring Station is a robust and versatile project that enables the collection and analysis of data related to gas and electricity usage. This repository serves as a comprehensive guide to set up and utilize the system for monitoring average gas and electricity consumption.
 
-The project incorporates a simulated sensor system that generates data, sending it to Amazon Web Services (AWS) Simple Queue Service (SQS) queues. AWS Lambda functions process incoming data, compute average values, and store the results in AWS DynamoDB. It sends email notifications to users when the average values exceed specified thresholds. This system is designed for scalability and can be extended to handle real-time data from sensors
+The project incorporates a simulated sensor system that generates data, sending it to Amazon Web Services (AWS) Kinesis streams. AWS Lambda functions process incoming data from one of the kinesis stream, compute average values, and store the results in AWS DynamoDB. It sends email notifications to users when the average values exceed specified thresholds. The other stream is used to make a predictive model for predicting future energy consumption. This system is designed for scalability and can be extended to handle real-time data from sensors.
 
 ## Features
 
-**Energy Usage Monitoring**: Simulated sensor data for gas and electricity usage.
+**Energy Usage Monitoring:**
 
-**AWS Integration**: Utilizes AWS services, including SQS, Lambda, DynamoDB, and SNS for data queuing, processing, storage, and notifications.
+Simulated sensor data for gas and electricity usage in PyCharm.
+Real-time transmission of data to AWS Kinesis streams for immediate processing.
 
-**Data Processing**: AWS Lambda functions calculate average values for gas and electricity consumption.
+**AWS Integration:**
 
-**Threshold Alerts**: Email notifications are sent via AWS SNS when the average values exceed defined thresholds.
+Dual-stream integration with AWS Kinesis for parallel data analytics.
+Utilizes AWS services, including Kinesis streams, Lambda, DynamoDB, S3 buckets, Sage maker, Kinesis firehouse and SNS for comprehensive data queuing, processing, storage, and notifications.
+
+**Data Processing:**
+
+1. Average computation: triggered upon data arrival in one Kinesis stream.
+2. Lambda functions for gas and electricity connected to DynamoDB, triggered based on threshold values.
+3. DynamoDB storage of distinct data entries, including sensor ID, average, timestamp, and measured parameters.
+4. SNS services for Email notifiction
+5. S3 buckets for saving data from sensors and converting data into CSV format for making the data set
+6. Seprate lamda function for converting the data
+7. Sage maker for making predictive model using XGBoost algorithm
+
+**Threshold Alerts:**
+
+Email notifications sent via AWS SNS when average gas or electricity values exceed predefined thresholds.
+Additional Lambda functions for specific threshold alerting connected to DynamoDB.
+
+**Data Ingestion for Predictive Modeling:**
+
+One Kinesis stream specifically dedicated to predictive modeling for future energy consumption.
+Data transfer from PyCharm to an S3 bucket via Kinesis Firehose, ensuring raw data preservation.
+
+**Data Transformation and SageMaker Integration:**
+
+Lambda function associated with the S3 bucket to convert raw data to CSV format.
+Utilizes SageMaker for predictive analysis on future energy consumption.
+Storage of SageMaker results in the S3 bucket, organized into two folders for test and train data, and a txt file containing prediction results.
+
+**User Interaction:**
+
+1- Local PyCharm access to DynamoDB data for real-time monitoring of average values.
+2- Email notifications to users alerting them of threshold breaches.
+3- Access to predictive values for future energy consumption.
+
 
 # Architecture
 ![Alt text](Images/Architecture.png)
