@@ -17,7 +17,7 @@ The project incorporates a simulated sensor system that generates data, sending 
 **Threshold Alerts**: Email notifications are sent via AWS SNS when the average values exceed defined thresholds.
 
 # Architecture
-(https://github.com/Aimanfaiz1999/Energy-Efficiency-Monitoring-Station/issues/1#issue-2000647490)
+Images/Architecture.png
 
 
 In this project:
