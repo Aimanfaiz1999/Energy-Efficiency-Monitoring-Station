@@ -63,11 +63,11 @@ In this project:
 - The processed data is saved in AWS DynamoDB for easy access and analysis.
 - Thresholds are defined, and email notifications are sent via AWS Simple Notification Service (SNS) when the average values exceed these thresholds.
 - Example of email when the Electricity usage threshold has been crossed:
-![Alt text](EmailElectricity.png)
+![Alt text](Images/EmailElectricity.png)
 - Example of email when the gas usage threshold has been crossed: 
-![Alt text](EmailGas.png)
+![Alt text](Images/EmailGas.png)
 - Additionally, code is provided in PyCharm that allows you to extract the entire DynamoDB table and display it on your console.
-![Alt text](Userdatadynamodb.png)
+![Alt text](Images/Userdatadynamodb.png)
 
 ## Prerequisite
 
