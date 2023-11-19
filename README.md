@@ -58,17 +58,16 @@ Storage of SageMaker results in the S3 bucket, organized into two folders for te
 In this project:
 
 - Mock sensor data for gas and electricity is generated using Python scripts in PyCharm.
-- Data is sent to AWS Simple Queue Service (SQS) queues within your AWS account. Two queues are created, one for gas and another for electricity.
-- AWS Lambda functions are set up to trigger when data arrives in these queues. These functions calculate average values for gas and electricity consumption.
+- Data is sent to AWS kinesis stream within my AWS account. Two Streams are created, one for storing the data for predictive model and 1 for computing avergaes and showing real time gas and electricity consuption to user via Dynamodb.
+- AWS Lambda function is set up to trigger when data arrives in these streams. The function calculate average values for gas and electricity consumption.
 - The processed data is saved in AWS DynamoDB for easy access and analysis.
 - Thresholds are defined, and email notifications are sent via AWS Simple Notification Service (SNS) when the average values exceed these thresholds.
 - Example of email when the Electricity usage threshold has been crossed:
-![EmailElectricity](https://github.com/Aimanfaiz1999/Energy-Consumption/assets/127203314/fea5fe6a-46a8-409d-a4c9-fef96bf5e720)
+![Alt text](EmailElectricity.png)
 - Example of email when the gas usage threshold has been crossed: 
-![EmailGas](https://github.com/Aimanfaiz1999/Energy-Consumption/assets/127203314/5b7136a5-36b7-48e6-80ce-448c3de19216)
-
+![Alt text](EmailGas.png)
 - Additionally, code is provided in PyCharm that allows you to extract the entire DynamoDB table and display it on your console.
-![Userdatatable](https://github.com/Aimanfaiz1999/Energy-Consumption/assets/127203314/ccca95a3-cb56-4487-ae67-e505df11c51a)
+![Alt text](Userdatadynamodb.png)
 
 ## Prerequisite
 
