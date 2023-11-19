@@ -55,6 +55,59 @@ Storage of SageMaker results in the S3 bucket, organized into two folders for te
 ![Alt text](Images/Architecture.png)
 
 
+# Project details
+**Mocking Sensors and AWS Kinesis Streams**
+
+1.  Sensor Mock:
+Mock gas and electricity sensors in PyCharm to generate data.
+
+2. AWS Kinesis Streams:
+Set up two AWS Kinesis streams to receive data from PyCharm.
+Streams are dedicated to gas and electricity values.
+
+**Average Computation and DynamoDB**
+1. Average Lambda Function:
+
+Connect one Kinesis stream to an AWS Lambda function for average computation.
+Lambda triggers upon data arrival and computes the average of 5 values.
+Separate entries for gas and electricity are saved in DynamoDB.
+DynamoDB entries include sensor ID, average, timestamp, and measured parameters.
+
+2. Threshold Alert Lambda Functions:
+
+Two additional Lambda functions connected to DynamoDB.
+Triggered if gas or electricity averages cross predefined thresholds.
+Send email notifications via AWS SNS to alert the user.
+
+**Predictive Modeling with SageMaker**
+
+1. Predictive Modeling Stream:
+Use the second Kinesis stream for predictive modeling.
+Data transferred to an S3 bucket via Kinesis Firehose in raw format.
+
+2. CSV Conversion Lambda Function:
+Lambda function associated with the S3 bucket converts raw data to CSV format.
+Saves the converted data into another S3 bucket.
+
+3.SageMaker Predictive Analysis:
+Utilize SageMaker for predictive analysis on future energy consumption.
+SageMaker saves data in the S3 bucket, creating folders for test and train data, and a txt file containing prediction results.
+
+# User Interaction
+
+**Local PyCharm Access:**
+
+Users can access DynamoDB data to view average values locally in PyCharm.
+
+**Email Notifications:**
+
+Users receive email notifications when gas or electricity thresholds are crossed.
+
+**Accessing Predictive Values:**
+
+Users can access predictive values stored in S3 buckets for future energy consumption.
+
+
 In this project:
 
 - Mock sensor data for gas and electricity is generated using Python scripts in PyCharm.
