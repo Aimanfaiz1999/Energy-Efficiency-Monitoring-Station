@@ -46,9 +46,9 @@ Storage of SageMaker results in the S3 bucket, organized into two folders for te
 
 **User Interaction:**
 
-1- Local PyCharm access to DynamoDB data for real-time monitoring of average values.
-2- Email notifications to users alerting them of threshold breaches.
-3- Access to predictive values for future energy consumption.
+1. Local PyCharm access to DynamoDB data for real-time monitoring of average values.
+2. Email notifications to users alerting them of threshold breaches.
+3. Access to predictive values for future energy consumption.
 
 
 # Architecture
@@ -89,7 +89,7 @@ Data transferred to an S3 bucket via Kinesis Firehose in raw format.
 Lambda function associated with the S3 bucket converts raw data to CSV format.
 Saves the converted data into another S3 bucket.
 
-3.SageMaker Predictive Analysis:
+3. SageMaker Predictive Analysis:
 Utilize SageMaker for predictive analysis on future energy consumption.
 SageMaker saves data in the S3 bucket, creating folders for test and train data, and a txt file containing prediction results.
 
@@ -98,29 +98,21 @@ SageMaker saves data in the S3 bucket, creating folders for test and train data,
 **Local PyCharm Access:**
 
 Users can access DynamoDB data to view average values locally in PyCharm.
+Code is provided in PyCharm that allows you to extract the entire DynamoDB table and display it on your console.
+![Alt text](Images/Userdatadynamodb.png)
 
 **Email Notifications:**
 
 Users receive email notifications when gas or electricity thresholds are crossed.
+Example of email when the Electricity usage threshold has been crossed:
+![Alt text](Images/EmailElectricity.png)
+Example of email when the gas usage threshold has been crossed: 
+![Alt text](Images/EmailGas.png)
 
 **Accessing Predictive Values:**
 
-Users can access predictive values stored in S3 buckets for future energy consumption.
+Users can access predictive values stored in S3 buckets for future energy consumption by downloading the .txt file.
 
-
-In this project:
-
-- Mock sensor data for gas and electricity is generated using Python scripts in PyCharm.
-- Data is sent to AWS kinesis stream within my AWS account. Two Streams are created, one for storing the data for predictive model and 1 for computing avergaes and showing real time gas and electricity consuption to user via Dynamodb.
-- AWS Lambda function is set up to trigger when data arrives in these streams. The function calculate average values for gas and electricity consumption.
-- The processed data is saved in AWS DynamoDB for easy access and analysis.
-- Thresholds are defined, and email notifications are sent via AWS Simple Notification Service (SNS) when the average values exceed these thresholds.
-- Example of email when the Electricity usage threshold has been crossed:
-![Alt text](Images/EmailElectricity.png)
-- Example of email when the gas usage threshold has been crossed: 
-![Alt text](Images/EmailGas.png)
-- Additionally, code is provided in PyCharm that allows you to extract the entire DynamoDB table and display it on your console.
-![Alt text](Images/Userdatadynamodb.png)
 
 ## Prerequisite
 
@@ -142,34 +134,47 @@ To get started with the Energy Efficiency Monitoring Station, follow these steps
 
 2. **AWS Setup**:
    - Set up your AWS account if you haven't already.
-   - Create two AWS SQS queues, one for gas and one for electricity.
-   - Configure AWS Lambda function-Energy consumption to trigger when data arrives in these queues.
+   - Create two AWS Kinesis streams and 1 kinesis firehouse stream for data delivery, one stream for Storage and one for real time energy consumption display.
+   - Configure AWS Lambda function-AverageFunction to trigger when data arrives in storage stream.
    - Set up AWS DynamoDB to store the processed data.
-   - Configure AWS Lambda function to trigger when data arrives in dynamodb.
-   - Create an AWS SNS topic for email notifications.
+   - Configure AWS Lambda functions to trigger when data arrives in dynamodb.
+   - Lambdas should check averge values for Gas and electricity 
+   - Create an AWS SNS topic for email notifications if the average values/threshold has been crossed.
+   - Create Kinesis fire house for storage of data into bucket.
+   - Configure a Lamda to convert JSON data to CSV to make it a data set files.
+   - Launch Sgermaker Juypter note book tow make predictive model and deploying to end points.
+   - Download the predictive results via local pycharm to show to the user
 
 3. **AWS Policies and roles**:
    - Create a new policy for reading into queues
-   - Assign that policy to AWS Lambda-Energy consumption role
-   - Assign full access to dynmodb policy and full access to SQS policy to AWS Lamda-Energy consumption role
+   - Assign that policy to AWS Lambda-AvergaeFunction role
+   - Assign full access to dynmodb policy and full access to SQS policy to AWS Lamda-AvergaeFunction role
    - Assign full access to dynmodb policy and full access to SNS policy to AWS Lamda-Alert_gas role
    - Assign full access to dynmodb policy and full access to SNS policy to AWS Lamda-Alert_electricity role
+   - Assign full access to full access to S3 buckets to AWS Lamda-JSONtoCSV role
 
 5. **Data Generation**:
-   - Simulate data for gas and electricity usage. This can be achieved using Python scripts or any other preferred method.
+   - Simulate data for gas and electricity usage. This can be achieved using Python script named Senddata.py.
 
 6. **Data Ingestion**:
-   - Send the simulated data to the respective SQS queues created in the previous step.
+   - Send the simulated data to the respective Streams created in the previous step.
 
 7. **Lambda Functions**:
    - Configure and deploy AWS Lambda functions to process incoming data from the queues.
-   - The Lambda functions should perform average calculations for gas and electricity consumption.
+   - The Lambda functions should perform average calculations for gas and electricity consumption using Averagefunction script.
    - Ensure that the results are saved to AWS DynamoDB for easy access and analysis.
    - From AWS Dynamodb, AWS Lamda-Alert_gas role and AWS Lamda-Alert_Electricity triggers if the values are above the thresholds 
 
 6. **Threshold Configuration**:
    - Set the threshold values for gas and electricity consumption in the Lambda functions-Alert_gas and Alert_electricity respectively.
    - When the average values exceed these thresholds, the system will trigger an alert. This will send email to recipient.
+
+7. **Predivtive model**
+   - Set Kinesis firehouse to deliver data to S3 bucket
+   - Configure Lamda to convert raw data into CSV using JSONtoCSV.py script
+   - Store csv files in seprate bucket
+   - Setup Juypter noteboook to make model using Predictive model.py script
+   - Download the predictions using predictions.py script locally.
 
 ## Usage
 
@@ -181,11 +186,7 @@ The Energy Efficiency Monitoring Station is a powerful tool for monitoring and i
 
 - **Alerting**: Implement alerting mechanisms based on threshold values to notify stakeholders of abnormal energy consumption patterns.
 
-- **Analytics**: Utilize AWS or other analytics platforms to gain deeper insights from the stored data.
-
-## Alerting
-
-The project includes email notifications for alerting when the average values of gas and electricity usage exceed specified thresholds. Configure the email notifications in the AWS SNS topic and provide the appropriate email addresses for the recipients. It shows real time data to user. 
+- **Predictions**: Utilize AWS or historic data to predict future energy consumption using trained model with previous data.
 
 ## Contributing
 
@@ -197,5 +198,5 @@ This project is open-source and available under the [MIT License](LICENSE). Feel
 
 If you encounter any issues or have questions, please don't hesitate to open an issue in this repository.
 
-Enjoy monitoring and improving energy efficiency with the Energy Efficiency Monitoring Station!
+Enjoy monitoring and predicting energy efficiency with the Energy Efficiency Monitoring Station!
 
